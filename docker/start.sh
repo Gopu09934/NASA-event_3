@@ -23,15 +23,15 @@ if [ -z "${YOUTUBE_API_KEY:-}" ] || [ -z "${YOUTUBE_CHANNEL_ID:-}" ]; then
 fi
 
 echo "========================================"
-echo "Starting 24/7 YouTube Stream (Mars & Beehive Cluster Sky Tracker)"
+echo "Starting 24/7 YouTube Stream (Orionid Meteor Shower 2026 Tracker)"
 echo "Output Resolution : 1280x720 (720p — sized for a 2-core CI runner)"
 echo "FPS               : 30"
 echo "========================================"
 
 FONT="font.ttf"
-# Accent color — Mars orange (was sky blue 0x4FC3F7). If you change this,
+# Accent color — meteor cyan. If you change this,
 # also change GOLD_R/G/B below so the label marker dot matches.
-GOLD="0xFF8A50"
+GOLD="0x4FC3F7"
 RED="0xE8453C"
 ASSET_DIR="panel_assets"
 INFO_FILE="galaxy_info.txt"
@@ -64,26 +64,26 @@ SUB_ICON_R=20
 ENABLE_BUMPER=true
 BUMPER_DURATION=5   # seconds
 BUMPER_MESSAGES=(
-    "Mars passes through the Beehive Star Cluster around October 11 and 12, 2026.",
-    "Watch the Red Planet glide through the glittering stars of Messier 44.",
-    "Mars shines orange-red among the pale blue-white stars of the Beehive Cluster.",
-    "Mars looks close to the Beehive, but the cluster is about 600 light-years farther away.",
-    "A pair of binoculars turns this meeting into a spectacular sight.",
-    "The Beehive Cluster holds roughly 1,000 stars, and Mars is about to join the swarm.",
-    "Look toward the constellation Cancer, the Crab, to find Mars and the Beehive.",
-    "Planets follow the ecliptic, which is why they sometimes cross star clusters like the Beehive.",
-    "Mars drifts eastward against the stars, slowly crossing the Beehive night after night.",
-    "Mars rises after midnight and shines best in the dark sky before dawn.",
-    "The Beehive is also called Praesepe, Latin for the manger.",
-    "Mars glows with the color of iron oxide dust spread across its surface.",
-    "Stay with us and watch the Red Planet visit one of the sky's most famous star clusters.",
-    "Dark skies reveal the Beehive as a faint misty patch to the naked eye.",
-    "Galileo first resolved the Beehive into individual stars with his telescope in 1609.",
-    "Every night the sky changes. Tonight Mars is closer to the heart of the Beehive.",
-    "Mars is far brighter than any single star in the Beehive Cluster.",
-    "A rare celestial meeting: one planet, one ancient star cluster, one beautiful sky.",
-    "Keep watching as Mars crosses the Beehive in our October 2026 Sky Tracker.",
-    "Enjoy Mars meeting the Beehive Star Cluster LIVE and explore the wonders of our night sky."
+    "The Orionid meteor shower peaks on the night of October 21 to 22, 2026."
+    "Orionid meteors are tiny dust grains left behind by Halley's Comet."
+    "Orionids hit Earth's atmosphere at about 66 km per second."
+    "Look for fast, bright meteors streaking away from the club of Orion."
+    "Expect roughly 10 to 20 meteors per hour under dark skies at the peak."
+    "The best viewing is after midnight, when Orion climbs high in the sky."
+    "No telescope needed. Lie back, look up and let your eyes adapt for 20 minutes."
+    "Orionids are known for fast meteors that often leave glowing trains."
+    "Trace a meteor backward and its path points to the radiant near Betelgeuse."
+    "Halley's Comet last visited in 1986 and returns in 2061."
+    "The same Halley debris also creates the Eta Aquariid meteor shower in May."
+    "Orionids can be seen for weeks, from late September to early November."
+    "Look about 45 degrees away from Orion for the longest meteor trails."
+    "The Moon sets before dawn, so the darkest hours come just before sunrise."
+    "Each meteor is a grain of comet dust, often no bigger than a grain of sand."
+    "Meteors glow because the air in front of them is heated to thousands of degrees."
+    "Find a dark spot away from city lights and give the sky a full hour."
+    "Orion rises in the east around 10 to 11 PM and is highest before dawn."
+    "Stay with us for the Orionid peak and catch the shooting stars LIVE."
+    "Enjoy the Orionid Meteor Shower LIVE and explore the wonders of our night sky."
 )
 
 #############################################
@@ -105,8 +105,8 @@ mkdir -p "$ASSET_DIR"
 # have a matching .labels.txt file.
 #############################################
 DOT_MARKER="dot_marker.png"
-# Must match GOLD above (0xFF8A50 = 255,138,80)
-GOLD_R=255; GOLD_G=138; GOLD_B=80
+# Must match GOLD above (0x4FC3F7 = 79,195,247)
+GOLD_R=79; GOLD_G=195; GOLD_B=247
 DOT_VF="format=rgba,geq=r=(if(lte(hypot(X-10\,Y-10)\,5)\,${GOLD_R}\,if(lte(hypot(X-10\,Y-10)\,8)\,255\,0))):g=(if(lte(hypot(X-10\,Y-10)\,5)\,${GOLD_G}\,if(lte(hypot(X-10\,Y-10)\,8)\,255\,0))):b=(if(lte(hypot(X-10\,Y-10)\,5)\,${GOLD_B}\,if(lte(hypot(X-10\,Y-10)\,8)\,255\,0))):a=(if(lte(hypot(X-10\,Y-10)\,8)\,255\,0))"
 ffmpeg -y -f lavfi -i "color=c=black@0.0:s=20x20" -vf "$DOT_VF" -frames:v 1 "$DOT_MARKER" -loglevel error
 if [ ! -s "$DOT_MARKER" ]; then
@@ -218,12 +218,12 @@ trap 'kill "$CLOCK_PID" 2>/dev/null || true; [ -n "$SUBS_PID" ] && kill "$SUBS_P
 #############################################
 # Static panel text (unchanged across videos)
 #############################################
-printf 'MARS + BEEHIVE CLUSTER'                      > "$ASSET_DIR/title1.txt"
-printf 'R E D   P L A N E T   M E E T S   M 4 4'     > "$ASSET_DIR/title2.txt"
-printf 'L I V E   S K Y   T R A C K E R'             > "$ASSET_DIR/header.txt"
-printf 'OCTOBER 2026 SKY EVENT'                      > "$ASSET_DIR/eyebrow.txt"
+printf 'ORIONID METEOR SHOWER'                      > "$ASSET_DIR/title1.txt"
+printf 'F R O M   C O M E T   H A L L E Y'          > "$ASSET_DIR/title2.txt"
+printf 'M E T E O R   S H O W E R   T R A C K E R'  > "$ASSET_DIR/header.txt"
+printf 'PEAK OCTOBER 21-22, 2026'                    > "$ASSET_DIR/eyebrow.txt"
 printf 'SUBSCRIBE FOR MORE SPACE & SCIENCE'          > "$ASSET_DIR/cta.txt"
-printf 'SKY FACT'                                    > "$ASSET_DIR/fact_label.txt"
+printf 'METEOR FACT'                                 > "$ASSET_DIR/fact_label.txt"
 
 #############################################
 # Default headline / fact pools (used as a
@@ -236,54 +236,54 @@ printf 'SKY FACT'                                    > "$ASSET_DIR/fact_label.tx
 # only ~280px wide.
 #############################################
 DEFAULT_HEADLINES=(
-    "Mars passes through the Beehive Cluster around October 11-12, 2026."
-    "The Beehive Cluster, Messier 44, lies in the constellation Cancer, the Crab."
-    "Mars will shine as a bright orange-red dot among the cluster's pale stars."
-    "Mars is only minutes of light-time away. The Beehive is about 600 light-years away."
-    "Planets travel along the ecliptic, so they often pass near the Beehive Cluster."
-    "Binoculars reveal dozens of Beehive stars with Mars glowing among them."
-    "Mars rises after midnight and shines best in the dark sky before dawn."
-    "Night after night, Mars drifts eastward against the background stars."
-    "The Beehive is also known as Praesepe, Latin for the manger."
-    "The cluster holds around 1,000 stars bound loosely by gravity."
-    "Mars owes its red color to iron oxide dust on its surface."
-    "Dark skies away from city lights give the best view of the Beehive."
-    "The Beehive Cluster is roughly 600 million years old."
-    "Galileo first resolved the Beehive into individual stars in 1609."
-    "Watch the sky change as Mars slowly moves across the cluster."
+    "The Orionid meteor shower peaks on the night of October 21-22, 2026."
+    "Orionids are dust grains shed by Halley's Comet."
+    "The radiant sits in Orion, near the star Betelgeuse."
+    "Orionid meteors strike the atmosphere at about 66 km per second."
+    "Expect around 10 to 20 meteors per hour under dark skies."
+    "The best viewing is after midnight until the pre-dawn hours."
+    "Orionids are fast and often leave glowing trains."
+    "Occasional bright fireballs can light up the sky."
+    "The Moon sets before dawn, leaving dark skies in the early morning."
+    "No telescope needed. Just look up from a dark location."
+    "Meteors appear all over the sky, not just near Orion."
+    "Halley's Comet returns to the inner Solar System in 2061."
+    "The shower is active from late September to early November."
+    "Let your eyes adapt to the dark for at least 20 minutes."
+    "Watch the live sky and count the shooting stars with us."
 )
 
 DEFAULT_FACTS=(
-    "Mars and the Beehive only look close from our viewpoint. It is a line-of-sight alignment."
-    "Messier 44 is one of the nearest open star clusters to Earth."
-    "The Beehive is about 600 light-years away, while Mars is only light-minutes from us."
-    "Mars is far brighter than any single star in the Beehive Cluster."
-    "The cluster glows at about magnitude 3.1 and can be seen with the naked eye under dark skies."
-    "The Beehive spans about three Full Moons across the sky."
-    "Binoculars or a wide-field low-power telescope give the best view of M44."
-    "Mars looks orange-red because of iron oxide, or rust, in its dust."
-    "Mars has a diameter of about 6,779 km, roughly half that of Earth."
-    "A day on Mars lasts about 24 hours and 37 minutes."
-    "A Martian year lasts about 687 Earth days."
-    "Olympus Mons on Mars is about 22 km high, the tallest known volcano in the Solar System."
-    "Valles Marineris is a canyon system more than 4,000 km long on Mars."
-    "Mars has two small moons named Phobos and Deimos."
-    "The Sun, Moon and planets all follow the ecliptic, a path through the zodiac constellations."
-    "Cancer is a faint constellation, and the Beehive is its most famous sight."
-    "Two faint stars called the Aselli, or donkey colts, sit on either side of the Beehive."
-    "Ancient skywatchers called the cluster Praesepe, the manger, with the donkey colts beside it."
-    "Ptolemy described the cluster as a misty patch in the chest of Cancer."
-    "Galileo counted about 40 stars in the cluster with his telescope in 1609."
-    "The Beehive contains roughly 1,000 stars that formed together from the same cloud."
-    "The cluster is thought to be about 600 million years old."
-    "Its stars share a common motion through space, like a flock traveling together."
-    "Mars moves eastward against the stars, a little more each night."
-    "Let your eyes adapt to the dark for 20 to 30 minutes before observing."
-    "You do not need a telescope. A basic pair of binoculars is enough."
-    "Moonlight washes out faint stars, so moonless nights show the cluster best."
-    "Planets shine with a steadier light than stars, which twinkle more."
-    "Under good conditions the Beehive looks like a small misty cloud to the naked eye."
-    "Mars crossing the Beehive is a favorite target for astrophotographers."
+    "Orionid meteors come from Halley's Comet, the most famous comet in history."
+    "Halley's Comet orbits the Sun about every 76 years. Its last visit was in 1986."
+    "Earth crosses Halley's debris stream twice a year, in October and in May."
+    "The May crossing produces the Eta Aquariid meteor shower."
+    "Orionid meteors travel at about 66 km per second, or roughly 148,000 mph."
+    "Most Orionid meteoroids are no bigger than a grain of sand."
+    "A meteor is the streak of light. The grain itself is called a meteoroid."
+    "Meteors glow because the air in front of them is compressed and heated."
+    "Meteors usually burn up 70 to 100 km above the ground."
+    "A meteorite is a piece that survives and lands on Earth. Orionid grains do not."
+    "The Orionid radiant lies in Orion, close to the border with Gemini."
+    "Meteors seem to spread out from the radiant because of perspective."
+    "Trace any Orionid backward and its path points to the radiant."
+    "Orionids are known for fast meteors and glowing trains that last a second or two."
+    "Peak rates are usually around 10 to 20 meteors per hour."
+    "Orionids are active for weeks, from late September to early November."
+    "Orion rises in the east around 10 to 11 PM and climbs higher through the night."
+    "The best time to watch is after midnight, before the sky brightens at dawn."
+    "You do not need a telescope or binoculars. Your eyes see the widest sky."
+    "Look about 45 degrees away from the radiant to see the longest trails."
+    "Lie back on a reclining chair and take in as much sky as you can."
+    "Let your eyes adapt for 20 to 30 minutes and avoid looking at bright screens."
+    "Dark sites away from city lights show many more meteors."
+    "Betelgeuse is the red supergiant that marks Orion's shoulder."
+    "The three stars of Orion's Belt point toward Sirius, the brightest star."
+    "A meteor storm is far rarer than a shower. Orionids are a steady, modest shower."
+    "Meteors can appear in any direction, so watch the whole sky."
+    "Fireballs are meteors brighter than the planet Venus."
+    "Many meteors are seen only for a fraction of a second."
+    "Every night you stay out, you see the sky slowly turn as Earth rotates."
 )
 
 #############################################
@@ -304,8 +304,8 @@ DEFAULT_FACTS=(
 # edges) are computed automatically.
 #
 # Example for this event (<video>.labels.txt):
-#   640,360,Mars
-#   760,300,Beehive Cluster (M44)
+#   640,360,Orionid Radiant
+#   760,300,Betelgeuse
 #
 # Visual style matches the rest of the panel:
 # accent-ring/white marker dot (uses the
@@ -513,9 +513,9 @@ build_labels_chain() {
 # clip.
 #
 # NOTE: if galaxy_info.txt / facts.txt exist in
-# your repo they OVERRIDE the built-in Mars &
-# Beehive defaults above — delete or replace
-# them, or the old content will still show.
+# your repo they OVERRIDE the built-in Orionid
+# defaults above — delete or replace them, or
+# the old content will still show.
 #############################################
 prepare_video_content() {
     local url="$1"
